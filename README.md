@@ -1,6 +1,6 @@
 ## KDEventEmitter
 
-This is a basic event emitter.
+This is a basic event emitter for KDFramework.
 
 ### Static events API
 
@@ -32,16 +32,16 @@ view.emit eventName[, arg1[, arg2[, ...]]]
 
 ### Authors
 
-- @devrim - Devrim Yasar
-- @sinan - Sinan Yasar
-- @humanchimp - Chris Thorn
+- [@devrim](https://github.com/devrim) - Devrim Yasar
+- [@sinan](https://github.com/sinan) - Sinan Yasar
+- [@humanchimp](https://github.com/humanchimp) - Chris Thorn
 
 
 ### History
 
-- author     : @devrim - 12/2011
-- refactored : @sinan - 05/2012
-- refactored : @sinan - 01/2013
-- improved   : @sinan - 02/2013
-- improved   : @humanchimp - 02/2013
-- moved here : @sinan - 12/2014
+- author     : [@devrim](https://github.com/devrim) - 12/2011
+- refactored : [@sinan](https://github.com/sinan) - 05/2012
+- refactored : [@sinan](https://github.com/sinan) - 01/2013
+- improved   : [@sinan](https://github.com/sinan) - 02/2013
+- improved   : [@humanchimp](https://github.com/humanchimp) - 02/2013
+- moved here : [@sinan](https://github.com/sinan) - 12/2014
