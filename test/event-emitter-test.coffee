@@ -354,3 +354,42 @@ describe 'KDEventEmitter', ->
       expect(count).toBe 5
 
 
+  describe '#forwardEvents', ->
+
+    beforeEach ->
+
+      @emitter = new KDEventEmitter
+      @otherEmitter = new KDEventEmitter
+      @events = ['FooHappened', 'BarHappened']
+
+    it 'forwards list of events from given event emitter', ->
+
+      result = {}
+
+      @emitter.on 'FooHappened', (value) -> result.foo = value
+      @emitter.on 'BarHappened', (value) -> result.bar = value
+
+      @emitter.forwardEvents @otherEmitter, @events
+
+      @otherEmitter.emit 'FooHappened', 'baz'
+      @otherEmitter.emit 'BarHappened', 'qux'
+
+      expect(result.foo).toBe 'baz'
+      expect(result.bar).toBe 'qux'
+
+    it 'forwards list of events with extra prefix', ->
+
+      result = {}
+
+      @emitter.on 'PrefixFooHappened', (value) -> result.foo = value
+      @emitter.on 'PrefixBarHappened', (value) -> result.bar = value
+
+      # notice prefix as 3rd arg.
+      @emitter.forwardEvents @otherEmitter, @events, 'Prefix'
+
+      @otherEmitter.emit 'FooHappened', 'baz'
+      @otherEmitter.emit 'BarHappened', 'qux'
+
+      expect(result.foo).toBe 'baz'
+      expect(result.bar).toBe 'qux'
+
