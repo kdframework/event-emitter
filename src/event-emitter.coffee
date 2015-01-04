@@ -138,3 +138,17 @@ module.exports = class KDEventEmitter
     @on eventName, _listener
 
     return this
+
+
+  ###*
+   * It forwards given eventName from target object.
+   *
+   * @param {KDEventEmitter} target - Target object to forward events from.
+   * @param {String} eventName - Name of event to be forwarded.
+   * @param {String=} prefix - Prefix to be added to the events when forwarding.
+  ###
+  forwardEvent: (target, eventName, prefix = '') ->
+
+    target.on eventName, @emit.bind this, (prefix + eventName)
+
+
