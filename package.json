@@ -1,6 +1,6 @@
 {
   "name": "kdf-event-emitter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Another event emitter.",
   "main": "lib/index.js",
   "repository": {
@@ -15,12 +15,10 @@
   },
   "author": "Sinan Yasar <s@kd.io>",
   "license": "MIT",
-  "dependencies": {
-    "kdf-core": "0.0.x"
-  },
   "devDependencies": {
     "coffee-script": "^1.8.0",
-    "jest-cli": "^0.2.0"
+    "jest-cli": "^0.2.0",
+    "kdf-core": "0.0.x"
   },
   "jest": {
     "testDirectoryName": "test",
