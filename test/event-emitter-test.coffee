@@ -299,7 +299,7 @@ describe 'KDEventEmitter', ->
       expect(emitter.off 'FooHappened', listener).toBe emitter
 
 
-  describe 'once', ->
+  describe '#once', ->
 
     it 'registers an event to be called only once', ->
 
@@ -320,4 +320,76 @@ describe 'KDEventEmitter', ->
       emitter = new KDEventEmitter
       expect(emitter.once 'FooHappened', ->).toBe emitter
 
+
+  describe '#forwardEvent', ->
+
+    emitter = new KDEventEmitter
+    otherEmitter = new KDEventEmitter
+
+    it 'forwards an event from given event emitter', ->
+
+      count = 0
+      emitter.on 'FooHappened', (number) -> count += number
+
+      # start listening 'FooHappened' event on
+      # other emitter to forward.
+      emitter.forwardEvent otherEmitter, 'FooHappened'
+
+      # emit event on otherEmitter
+      otherEmitter.emit 'FooHappened', 7
+
+      # expect emitter to forward event so that count would get updated.
+      expect(count).toBe 7
+
+
+    it 'forwards an event with extra prefix', ->
+
+      count = 0
+      emitter.on 'PrefixFooHappened', (number) -> count += number
+
+      emitter.forwardEvent otherEmitter, 'FooHappened', 'Prefix'
+
+      otherEmitter.emit 'FooHappened', 5
+
+      expect(count).toBe 5
+
+
+  describe '#forwardEvents', ->
+
+    beforeEach ->
+
+      @emitter = new KDEventEmitter
+      @otherEmitter = new KDEventEmitter
+      @events = ['FooHappened', 'BarHappened']
+
+    it 'forwards list of events from given event emitter', ->
+
+      result = {}
+
+      @emitter.on 'FooHappened', (value) -> result.foo = value
+      @emitter.on 'BarHappened', (value) -> result.bar = value
+
+      @emitter.forwardEvents @otherEmitter, @events
+
+      @otherEmitter.emit 'FooHappened', 'baz'
+      @otherEmitter.emit 'BarHappened', 'qux'
+
+      expect(result.foo).toBe 'baz'
+      expect(result.bar).toBe 'qux'
+
+    it 'forwards list of events with extra prefix', ->
+
+      result = {}
+
+      @emitter.on 'PrefixFooHappened', (value) -> result.foo = value
+      @emitter.on 'PrefixBarHappened', (value) -> result.bar = value
+
+      # notice prefix as 3rd arg.
+      @emitter.forwardEvents @otherEmitter, @events, 'Prefix'
+
+      @otherEmitter.emit 'FooHappened', 'baz'
+      @otherEmitter.emit 'BarHappened', 'qux'
+
+      expect(result.foo).toBe 'baz'
+      expect(result.bar).toBe 'qux'
 
